@@ -6,7 +6,8 @@ app.use(express.json());
 app.get("/sum",function(req,res){
     const a = req.query.a;
     const b = req.query.b;
-    res.send((parseInt(a)+parseInt(b)).toString);
+    const sum = parseInt(a)+parseInt(b);
+    res.send(sum.toString());
 })
 
 app.get("/interest",function(req,res){
