@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id ="principal" placeholder="enter principal"></input><br><br>
+    <input type="text" id ="rate" placeholder="enter rate"></input><br><br>
+    <input type="text" id ="time" placeholder="enter time"></input><br><br>
+    <button onClick="calculateInterest()">Calculate</button><br>
+    <div id="final interest"></div>
+
+    <script>
+        function calculateInterest(){
+            const p = document.getElementById("principal").value;
+            const r = document.getElementById("rate").value;
+            const t = document.getElementById("time").value;
+            fetch("https://hitbackendserver.onrender.com/interest/?p="+p+"&r="+r+"&t="+t).then(function(resolve){
+                resolve.text()
+                    .then(function(result){
+                        document.getElementById("final interest").innerHTML = result;
+                })
+            });
+
+        }
+    </script>
+    
+</body>
+</html>

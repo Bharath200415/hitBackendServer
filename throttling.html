@@ -1,0 +1,42 @@
+<!-- Earlier we used to call the calculate function on button click
+  but now as soon as the input field value changes
+   ryt after that it has to reflect changes
+    and call the calculate function: this is the concept of throttling -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" onInput="debouncedCalculateDiv()" id ="principal" placeholder="enter principal"><br><br>
+    <input type="text" onInput="debouncedCalculateDiv()" id ="rate" placeholder="enter rate"><br><br>
+    <input type="text" onInput="debouncedCalculateDiv()" id ="time" placeholder="enter time"><br><br>
+    
+    <div id="final-interest"></div>
+
+    <script>
+        let timeout;
+        function debouncedCalculateDiv(){
+            //we basically need to cancel this clock ryt after there's some other input
+            //clearTimeout
+            clearTimeout(timeout);
+            timeout = setTimeout(function(){
+                calculateInterest()
+            },1000);
+
+        }
+        async function calculateInterest(){
+            const p = document.getElementById("principal").value;
+            const r = document.getElementById("rate").value;
+            const t = document.getElementById("time").value;
+            const resolve = await fetch("https://hitbackendserver.onrender.com/interest/?p="+p+"&r="+r+"&t="+t);
+            const result = await resolve.text();
+            document.getElementById("final-interest").innerHTML = result;
+
+        }
+    </script>
+    
+</body>
+</html>
