@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+<body>
+    <input type="text" onInput="debouncedCalculateDiv()" id ="principal" placeholder="enter principal"><br><br>
+    <input type="text" onInput="debouncedCalculateDiv()" id ="rate" placeholder="enter rate"><br><br>
+    <input type="text" onInput="debouncedCalculateDiv()" id ="time" placeholder="enter time"><br><br>
+    
+    <div id="final-interest"></div>
+
+    <script>
+        let timeout;
+        function debouncedCalculateDiv(){
+            //we basically need to cancel this clock ryt after there's some other input
+            //clearTimeout
+            clearTimeout(timeout);
+            timeout = setTimeout(function(){
+                calculateInterest()
+            },1000);
+
+        }
+        async function calculateInterest(){
+            const p = document.getElementById("principal").value;
+            const r = document.getElementById("rate").value;
+            const t = document.getElementById("time").value;
+            const resolve = await axios.get("https://hitbackendserver.onrender.com/interest/?p="+p+"&r="+r+"&t="+t);
+            const result = resolve.data;
+
+            document.getElementById("final-interest").innerHTML = result;
+
+        }
+    </script>
+    
+</body>
+</html>
